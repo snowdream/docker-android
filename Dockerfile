@@ -7,8 +7,8 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # Install dependencies
 RUN dpkg --add-architecture i386 && \
-    apt-get update && \
-    apt-get install -yq libc6:i386 libstdc++6:i386 zlib1g:i386 libncurses5:i386 curl bzip2 xz-utils wget tar unzip git --no-install-recommends && \
+    apt-get -qq update && \
+    apt-get -qqy install libc6:i386 libstdc++6:i386 zlib1g:i386 libncurses5:i386 curl bzip2 xz-utils wget tar unzip git --no-install-recommends && \
     apt-get clean
 
 
@@ -36,8 +36,8 @@ ENV JAVA_DEBIAN_VERSION 8u91-b14-0ubuntu4~16.04.1
 ENV CA_CERTIFICATES_JAVA_VERSION 20160321
 
 RUN set -x \
-	&& apt-get update \
-	&& apt-get install -y \
+	&& apt-get -qq update \
+	&& apt-get -qqy install -y \
 		openjdk-8-jdk="$JAVA_DEBIAN_VERSION" \
 		ca-certificates-java="$CA_CERTIFICATES_JAVA_VERSION" \
 	&& rm -rf /var/lib/apt/lists/* \
@@ -74,4 +74,3 @@ ENV GRADLE_HOME /usr/local/gradle-${GRADLE_VERSION}
 ENV PATH ${GRADLE_HOME}/bin:$PATH
 
 ENV TERM dumb
-
