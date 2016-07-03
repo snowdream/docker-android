@@ -66,7 +66,9 @@ RUN echo y | android update sdk --no-ui --all --filter "${ANDROID_COMPONENTS}" ;
 
 # Download and unzip Gradle
 ENV GRADLE_SDK_URL https://services.gradle.org/distributions/gradle-2.14-bin.zip
-RUN curl -L "${GRADLE_SDK_URL}" | unzip -d /usr/local
+RUN curl -L "${GRADLE_SDK_URL}" -o gradle-2.14-bin.zip  \
+	&& unzip gradle-2.14-bin.zip -d /usr/local  \
+	&& rm -rf gradle-2.14-bin.zip
 ENV GRADLE_HOME /usr/local/gradle-2.14
 ENV PATH ${GRADLE_HOME}/bin:$PATH
 
