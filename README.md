@@ -13,6 +13,15 @@ No `ant`, `maven`, nor `android-ndk` are included.
 * Android Support Libraries
 * Google Play Services
 
+## Download
+```bash
+docker pull snowdream/docker-android
+```
+
+## Usage
+```bash
+sudo docker run -t -i snowdream/docker-android:latest /bin/bash
+```
 
 ## License
 ```
