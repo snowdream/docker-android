@@ -8,7 +8,7 @@ ENV DEBIAN_FRONTEND noninteractive
 # Install dependencies
 RUN dpkg --add-architecture i386 && \
     apt-get update && \
-    apt-get install -yq libc6:i386 libstdc++6:i386 zlib1g:i386 libncurses5:i386 bzip2 xz-utils wget tar unzip git --no-install-recommends && \
+    apt-get install -yq libc6:i386 libstdc++6:i386 zlib1g:i386 libncurses5:i386 curl bzip2 xz-utils wget tar unzip git --no-install-recommends && \
     apt-get clean
 
 
