@@ -33,7 +33,7 @@ ENV JAVA_DEBIAN_VERSION 8u91-b14-0ubuntu4~16.04.1
 
 # see https://bugs.debian.org/775775
 # and https://github.com/docker-library/java/issues/19#issuecomment-70546872
-ENV CA_CERTIFICATES_JAVA_VERSION 20140324
+ENV CA_CERTIFICATES_JAVA_VERSION 20160321
 
 RUN set -x \
 	&& apt-get update \
