@@ -65,11 +65,12 @@ RUN echo y | android update sdk --no-ui --all --filter "${ANDROID_COMPONENTS}" ;
     echo y | android update sdk --no-ui --all --filter "${GOOGLE_COMPONENTS}"
 
 # Download and unzip Gradle
-ENV GRADLE_SDK_URL https://services.gradle.org/distributions/gradle-2.14-bin.zip
-RUN curl -L "${GRADLE_SDK_URL}" -o gradle-2.14-bin.zip  \
-	&& unzip gradle-2.14-bin.zip -d /usr/local  \
-	&& rm -rf gradle-2.14-bin.zip
-ENV GRADLE_HOME /usr/local/gradle-2.14
+ENV GRADLE_VERSION 2.14
+ENV GRADLE_SDK_URL https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip
+RUN curl -L "${GRADLE_SDK_URL}" -o gradle-${GRADLE_VERSION}-bin.zip  \
+	&& unzip gradle-${GRADLE_VERSION}-bin.zip -d /usr/local  \
+	&& rm -rf gradle-${GRADLE_VERSION}-bin.zip
+ENV GRADLE_HOME /usr/local/gradle-${GRADLE_VERSION}
 ENV PATH ${GRADLE_HOME}/bin:$PATH
 
 ENV TERM dumb
