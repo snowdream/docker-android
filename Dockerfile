@@ -23,8 +23,8 @@ RUN { \
 		echo 'set -e'; \
 		echo; \
 		echo 'dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"'; \
-	} > /usr/local/bin/docker-java-home \
-	&& chmod +x /usr/local/bin/docker-java-home
+	} > ${SDK_HOME}/bin/docker-java-home \
+	&& chmod +x ${SDK_HOME}/bin/docker-java-home
 
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 
@@ -46,12 +46,14 @@ RUN set -x \
 # see CA_CERTIFICATES_JAVA_VERSION notes above
 RUN /var/lib/dpkg/info/ca-certificates-java.postinst configure
 
+# Everything will be installed in the directory but jdk.
+ENV SDK_HOME /usr/local
 
 # Download and untar SDK
 ENV ANDROID_SDK_URL http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
-RUN curl -L "${ANDROID_SDK_URL}" | tar --no-same-owner -xz -C /usr/local
-ENV ANDROID_HOME /usr/local/android-sdk-linux
-ENV ANDROID_SDK /usr/local/android-sdk-linux
+RUN curl -L "${ANDROID_SDK_URL}" | tar --no-same-owner -xz -C ${SDK_HOME}
+ENV ANDROID_HOME ${SDK_HOME}/android-sdk-linux
+ENV ANDROID_SDK ${SDK_HOME}/android-sdk-linux
 ENV PATH ${ANDROID_HOME}/tools:$ANDROID_HOME/platform-tools:$PATH
 
 # Install Android SDK components
@@ -68,9 +70,9 @@ RUN echo y | android update sdk --no-ui --all --filter "${ANDROID_COMPONENTS}" ;
 ENV GRADLE_VERSION 2.14
 ENV GRADLE_SDK_URL https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip
 RUN curl -L "${GRADLE_SDK_URL}" -o gradle-${GRADLE_VERSION}-bin.zip  \
-	&& unzip gradle-${GRADLE_VERSION}-bin.zip -d /usr/local  \
+	&& unzip gradle-${GRADLE_VERSION}-bin.zip -d ${SDK_HOME}  \
 	&& rm -rf gradle-${GRADLE_VERSION}-bin.zip
-ENV GRADLE_HOME /usr/local/gradle-${GRADLE_VERSION}
+ENV GRADLE_HOME ${SDK_HOME}/gradle-${GRADLE_VERSION}
 ENV PATH ${GRADLE_HOME}/bin:$PATH
 
 ENV TERM dumb
