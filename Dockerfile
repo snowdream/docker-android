@@ -12,6 +12,7 @@ RUN dpkg --add-architecture i386 && \
     apt-get clean
 
 
+
 # Download and Install Open-JDK-8
 # Default to UTF-8 file.encoding
 ENV LANG C.UTF-8
@@ -46,10 +47,12 @@ RUN set -x \
 # see CA_CERTIFICATES_JAVA_VERSION notes above
 RUN /var/lib/dpkg/info/ca-certificates-java.postinst configure
 
+
+
 # Everything will be installed in the directory but jdk.
 ENV SDK_HOME /usr/local
 
-# Download and untar SDK
+# Download and untar Android SDK
 ENV ANDROID_SDK_URL http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
 RUN curl -L "${ANDROID_SDK_URL}" | tar --no-same-owner -xz -C ${SDK_HOME}
 ENV ANDROID_HOME ${SDK_HOME}/android-sdk-linux
@@ -65,6 +68,15 @@ ENV GOOGLE_COMPONENTS extra-android-m2repository,extra-google-m2repository
 
 RUN echo y | android update sdk --no-ui --all --filter "${ANDROID_COMPONENTS}" ; \
     echo y | android update sdk --no-ui --all --filter "${GOOGLE_COMPONENTS}"
+
+# Download and unzip Android NDK
+ENV ANDROID_NDK_VERSION r12b
+ENV ANDROID_NDK_URL http://dl.google.com/android/repository/android-ndk-${ANDROID_NDK_VERSION}-linux-x86_64.zip
+RUN curl -L "${ANDROID_NDK_URL}" -o android-ndk-${ANDROID_NDK_VERSION}-linux-x86_64.zip  \
+  && unzip android-ndk-${ANDROID_NDK_VERSION}-linux-x86_64.zip -d ${SDK_HOME}  \
+  && rm -rf android-ndk-${ANDROID_NDK_VERSION}-linux-x86_64.zip
+ENV ANDROID_NDK_HOME ${SDK_HOME}/android-ndk-${ANDROID_NDK_VERSION}
+ENV PATH ${ANDROID_NDK_HOME}:$PATH
 
 # Download and unzip Gradle
 ENV GRADLE_VERSION 2.14
