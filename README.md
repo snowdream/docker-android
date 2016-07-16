@@ -1,4 +1,8 @@
 # docker-android
+
+## PLEASE NOTE, THIS PROJECT IS NO LONGER BEING MAINTAINED
+## You can check another project: [https://github.com/snowdream/dockerfiles/tree/master/android/sdk](https://github.com/snowdream/dockerfiles/tree/master/android/sdk)
+
 [![docker-android](http://dockeri.co/image/snowdream/docker-android)](https://hub.docker.com/r/snowdream/docker-android/)
 
 This is a Dockerfile to make minimum images for Android projects.
